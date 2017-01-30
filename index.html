@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="css/all.css" type="text/css" />
+	<script type="text/javascript" src="node_modules/angular/angular.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	<!--[if lte IE 8]><script type="text/javascript" src="js/ie.js"></script><![endif]-->
+</head>
+<body>
+	<div id="wrapper">
+		<div class="container">
+			<div class="main" ng-controller="MainController">
+            <form ng-submit="addTask()">
+            	<div class="form-group">
+            		<div class="row">
+            			<div class="col-xs-8">
+            				<input class="form-control" type="text" ng-model="newTaskName">
+            			</div>
+            			<div class="col-xs-4">
+            				<button class="btn btn-primary" type="submit" ng-disabled="!newTaskName">Add Task</button>
+            			</div>
+            		</div>
+            	</div>
+            	<div class="form-group">
+            		<div class="row">
+            			<div class="col-xs-2 col-xs-offset-3">сортировать</div>
+            			<div class="col-xs-3">
+            				<select class="form-control">
+								<option>по имени А-Я</option>
+								<option>по имени Я-А</option>
+								<option>по выполнению</option>
+							</select>
+            			</div>
+            			<div class="col-xs-2">показывать по </div>
+            			<div class="col-xs-2">
+            				<select class="form-control" ng-model="countPerPage">
+								<option value="5">5</option>
+								<option value="10">10</option>
+								<option value="15">15</option>
+							</select>
+            			</div>
+            		</div>
+            	</div>
+            	
+                
+            </form>
+            <br>
+            <table ng-if="taskList && taskList.length">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Done</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ALL</td>
+                        <td><label><input type="checkbox" ng-model="selectAll.value" ng-click="checkAll()"></label></td>
+                        <td><button class="btn btn-danger" ng-click="removeAllTask(task.id)"><span class="glyphicon glyphicon-remove-circle"></span></button></td>
+                    </tr>
+                    <tr ng-repeat="task in taskList | limitTo:countPerPage:offset | orderBy:'name':true track by $index" ng-class="{striped: task.done}">
+                        <td>{{task.name}}</td>
+                        <td>
+                            <label><input type="checkbox" ng-model="task.done"></label>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" ng-click="removeTask(task.id)"><span class="glyphicon glyphicon-remove-circle"></span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <p>страница {{activePage}} из {{taskListPager}}</p>
+            
+            <ul class="pagination">
+				<li ng-class="{active: $index==activePage-1}" ng-repeat="page in pagers"><a ng-click="goToPage(page)" href="#">{{page+1}}</a></li>
+			</ul>
+        </div>
+		</div>
+	</div>
+</body>
+</html>
