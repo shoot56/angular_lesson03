@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title></title>
 	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/all.css" type="text/css" />
 	<script type="text/javascript" src="node_modules/angular/angular.js"></script>
 	<script type="text/javascript" src="app.js"></script>
@@ -51,18 +52,31 @@
             <table ng-if="taskList && taskList.length">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Done</th>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            <a ng-click="sortTask()" href="#">
+                                Name
+                                <span ng-show="sortStatus" class="fa fa-caret-down"></span>
+                                <span ng-show="!sortStatus" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th>
+                            Done
+                        </th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>ALL</td>
-                        <td><label><input type="checkbox" ng-model="selectAll.value" ng-click="checkAll()"></label></td>
-                        <td><button class="btn btn-danger" ng-click="removeAllTask(task.id)"><span class="glyphicon glyphicon-remove-circle"></span></button></td>
+                        <td style="width: 100px">ID</td>
+                        <td>Name</td>
+                        <td style="width: 100px"><label><input type="checkbox" ng-model="selectAll.value" ng-click="checkAll()"></label></td>
+                        <td style="width: 100px"><button class="btn btn-danger" ng-click="removeAllTask(task.id)"><span class="glyphicon glyphicon-remove-circle"></span></button></td>
                     </tr>
-                    <tr ng-repeat="task in taskList | limitTo:countPerPage:offset | orderBy:'name':true track by $index" ng-class="{striped: task.done}">
+                    <tr ng-repeat="task in taskList | limitTo:countPerPage:offset  track by $index" ng-class="{striped: task.done}">
+                        <td>{{task.id}}</td>
                         <td>{{task.name}}</td>
                         <td>
                             <label><input type="checkbox" ng-model="task.done"></label>

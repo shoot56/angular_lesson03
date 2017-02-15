@@ -3,7 +3,7 @@
 		.module('myApp', [])
 		.controller('MainController', ['$scope', function($scope) {
 
-			$scope.countPerPage = 5;
+			$scope.countPerPage = 15;
 			$scope.offset = 0;
 			$scope.activePage = 1;
 
@@ -77,10 +77,22 @@
 				$scope.activePage = ($scope.offset/$scope.countPerPage)+1;
 
 			}
-
 			// paging end
 		}, true);
+		// sort task list 
+		$scope.sortStatus = 1;
+		$scope.sortTask = function() {
+			if ($scope.sortStatus === 1) {
+				function compareName(taskA, taskB) {
+					return taskA.name - taskB.name;
+				}
+				$scope.taskList.sort(compareName);
+				console.log($scope.taskList);
+				$scope.sortStatus = 0;
+			} else {
+				$scope.taskList.reverse(compareName);
+				$scope.sortStatus = 1;
+			}
+		};
 	}]);
-
-
 })();
