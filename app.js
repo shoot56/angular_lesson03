@@ -84,7 +84,7 @@
 		$scope.sortTask = function() {
 			if ($scope.sortStatus === 1) {
 				function compareName(taskA, taskB) {
-					return taskA.name - taskB.name;
+					return taskA.name > taskB.name ? 1 : -1;
 				}
 				$scope.taskList.sort(compareName);
 				console.log($scope.taskList);
